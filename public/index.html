@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ethio Tech Digital</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Noto+Sans+Ethiopic:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one light page built around the poster. Pale sky ground, navy ink, the poster's blue-to-green as the only accent pair.
+     The poster is light, so this page commits to a single light look on purpose. */
+  :root {
+    --bg: #f3f9fd;
+    --surface: #ffffff;
+    --ink: #0c2748;
+    --ink-soft: #4a5f7c;
+    --line: #d3e4f1;
+    --blue: #1c6fe0;
+    --blue-deep: #1558b8;
+    --teal: #0b8a6a;
+    --tg: #17709f;
+    --wa: #128a4a;
+    --danger: #c8323f;
+    --poster: url("poster.jpg");
+    --display: 'Sora', 'Noto Sans Ethiopic', system-ui, sans-serif;
+    --body: 'Manrope', 'Noto Sans Ethiopic', system-ui, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--surface); z-index: 40; }
+  h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.25; }
+  p { margin: 0; }
+  a { color: inherit; }
+  .in { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .ic { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+  /* Header */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding-top: 10px; padding-bottom: 10px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+  .brand-mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; display: grid; place-items: center; flex: none; }
+  .brand-name { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .brand-name b { font-family: var(--display); font-size: 1.05rem; font-weight: 800; }
+  .brand-name span { font-size: .72rem; color: var(--ink-soft); letter-spacing: .06em; text-transform: uppercase; }
+  .links { display: flex; gap: 22px; order: 3; width: 100%; overflow-x: auto; padding-bottom: 2px; }
+  .links a { text-decoration: none; font-weight: 600; font-size: .92rem; color: var(--ink-soft); white-space: nowrap; padding: 4px 0; }
+  .links a:hover { color: var(--blue); }
+  .tools { display: flex; align-items: center; gap: 8px; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--bg); }
+  .lang button { border: 0; background: transparent; color: var(--ink-soft); font: 700 .8rem var(--body); padding: 5px 12px; border-radius: 999px; cursor: pointer; min-height: 30px; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 700 .82rem var(--body); padding: 6px 12px; border-radius: 999px; cursor: pointer; min-height: 34px; }
+  .chip:hover { border-color: var(--blue); color: var(--blue); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  @media (min-width: 760px) { .links { order: 0; width: auto; } }
+
+  /* Hero with poster as the background texture */
+  .hero { background: linear-gradient(180deg, rgba(243, 249, 253, .90), rgba(243, 249, 253, .95)), var(--poster) center / cover no-repeat; border-bottom: 1px solid var(--line); }
+  .hero .in { padding-top: 56px; padding-bottom: 56px; text-align: center; }
+  .hero h1 { font-size: clamp(1.9rem, 5.2vw, 3.1rem); font-weight: 800; max-width: 20ch; margin: 0 auto 14px; }
+  .hero h1 em { font-style: normal; color: var(--blue); }
+  .hero .sub { font-size: clamp(1rem, 2.4vw, 1.2rem); color: var(--ink-soft); margin-bottom: 30px; }
+  .poster { display: block; width: 100%; max-width: 960px; margin: 0 auto 30px; padding: 0; aspect-ratio: 1408 / 768; background: var(--poster) center / cover no-repeat; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 28px 60px -28px rgba(28, 111, 224, .5); cursor: zoom-in; transition: transform .25s; }
+  .poster:hover { transform: translateY(-3px); }
+  .poster-hint { display: block; margin: -18px auto 30px; font-size: .8rem; color: var(--ink-soft); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2px solid transparent; border-radius: 999px; padding: 12px 24px; font: 700 .98rem var(--body); text-decoration: none; cursor: pointer; transition: background .2s, color .2s, transform .2s; min-height: 46px; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: var(--blue-deep); }
+  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+  .btn-tg { background: var(--tg); color: #fff; }
+  .btn-wa { background: var(--wa); color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-small { padding: 7px 14px; font-size: .86rem; min-height: 36px; border-radius: 10px; }
+
+  /* Features */
+  .features { padding-top: 56px; padding-bottom: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 16px; }
+  .feature { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; min-width: 0; }
+  .feature .fi { width: 44px; height: 44px; border-radius: 12px; background: #e3f0fc; color: var(--blue); display: grid; place-items: center; margin-bottom: 14px; font-size: 1.3rem; }
+  .feature h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .feature p { color: var(--ink-soft); font-size: .92rem; }
+
+  /* Sections */
+  section[id] { scroll-margin-top: 120px; }
+  .block { padding-top: 56px; padding-bottom: 56px; }
+  .block h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); text-align: center; margin-bottom: 8px; }
+  .block .lead { text-align: center; color: var(--ink-soft); margin-bottom: 32px; }
+
+  /* Portfolio */
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 20px; }
+  .pcard { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+  .pmedia { width: 100%; height: 190px; object-fit: cover; display: block; background: var(--bg); }
+  .pbody { padding: 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+  .ptag { font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+  .ptitle { font-size: 1.1rem; overflow-wrap: anywhere; }
+  .pdesc { color: var(--ink-soft); font-size: .92rem; flex: 1; overflow-wrap: anywhere; }
+  .pact { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .empty { grid-column: 1 / -1; text-align: center; color: var(--ink-soft); padding: 24px 0; }
+
+  /* Admin */
+  .admin { background: var(--surface); border: 2px dashed var(--blue); border-radius: 14px; padding: 24px; margin-bottom: 32px; }
+  .admin h3 { font-size: 1.1rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: var(--blue-deep); }
+  .admin .note { color: var(--ink-soft); font-size: .85rem; margin-bottom: 16px; }
+  .fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+  .fgrid .full { grid-column: 1 / -1; }
+
+  /* Forms */
+  .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .field label { font-weight: 700; font-size: .88rem; }
+  .ctl { width: 100%; padding: 11px 12px; border: 1px solid #b9d0e3; border-radius: 10px; background: var(--surface); color: var(--ink); font: 400 1rem var(--body); min-height: 44px; }
+  textarea.ctl { resize: vertical; min-height: 96px; }
+  .ctl:focus { outline: 3px solid rgba(28, 111, 224, .35); border-color: var(--blue); }
+
+  /* Order */
+  .order-wrap { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 860px) { .order-wrap { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; min-width: 0; }
+  .panel form { display: flex; flex-direction: column; gap: 14px; }
+  .order-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .order-btns .btn { flex: 1 1 180px; }
+  .status { border-radius: 10px; background: #e7f6f0; border: 1px solid #b6e2d3; padding: 12px 14px; font-size: .9rem; display: flex; flex-direction: column; gap: 8px; }
+  .status textarea { font: 400 .85rem/1.5 var(--body); min-height: 110px; border: 1px solid #b6e2d3; border-radius: 8px; padding: 8px; background: #fff; color: var(--ink); width: 100%; }
+  .contact h3 { font-size: 1.1rem; margin-bottom: 14px; }
+  .crow { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); min-width: 0; }
+  .crow .ci { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: #e3f0fc; color: var(--blue); flex: none; }
+  .crow div { min-width: 0; flex: 1; }
+  .crow small { display: block; color: var(--ink-soft); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+  .crow strong { font-size: 1rem; user-select: all; overflow-wrap: anywhere; }
+  .crow a { text-decoration: none; }
+
+  /* Floating contact buttons */
+  .float { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 12px; z-index: 35; }
+  .float a { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 1.5rem; box-shadow: 0 8px 20px rgba(12, 39, 72, .3); transition: transform .2s; }
+  .float a:hover { transform: scale(1.08); }
+  .float .f-tg { background: var(--tg); }
+  .float .f-wa { background: var(--wa); }
+
+  footer { background: var(--ink); color: #c9d8ea; text-align: center; margin-top: 24px; }
+  footer .in { padding-top: 28px; padding-bottom: 36px; }
+  footer p + p { margin-top: 4px; font-size: .86rem; color: #9fb5cf; }
+
+  /* Overlays */
+  .overlay { position: fixed; inset: 0; z-index: 60; background: rgba(8, 24, 48, .72); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .overlay[hidden] { display: none !important; }
+  .modal { background: var(--surface); border-radius: 16px; padding: 26px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px; }
+  .modal h3 { font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+  .modal .row { display: flex; gap: 10px; }
+  .modal .row .btn { flex: 1; }
+  .err { color: var(--danger); font-weight: 700; font-size: .88rem; }
+  .light { max-width: 1100px; position: relative; padding: 0; background: transparent; }
+  .light .poster { cursor: default; margin: 0; }
+  .light .poster:hover { transform: none; }
+  .x { position: absolute; top: -14px; right: -6px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--surface); color: var(--ink); cursor: pointer; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, .3); }
+
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: .92rem; z-index: 80; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
+  .toast[hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .btn-wide { width: 100%; }
+  .or { text-align: center; color: var(--ink-soft); font-size: .85rem; margin-top: 4px; }
+  .flabel { font-weight: 700; font-size: .88rem; }
+  .picker { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .ppreview { width: 180px; max-width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
+  .pbtns { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pbtns:focus-within label.btn { outline: 3px solid var(--blue); outline-offset: 2px; }
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="i-code"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></g>
+    <g id="i-monitor"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></g>
+    <g id="i-phone"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 18h.01"/></g>
+    <g id="i-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></g>
+    <g id="i-bolt"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></g>
+    <g id="i-lock"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></g>
+    <g id="i-send"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></g>
+    <g id="i-chat"><path d="M21 11.5a8.4 8.4 0 01-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1121 11.5z"/></g>
+    <g id="i-link"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6M10 14L21 3"/></g>
+    <g id="i-trash"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></g>
+    <g id="i-plus"><path d="M12 5v14M5 12h14"/></g>
+    <g id="i-layers"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></g>
+    <g id="i-copy"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></g>
+    <g id="i-x"><path d="M18 6L6 18M6 6l12 12"/></g>
+    <g id="i-image"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></g>
+    <g id="i-edit"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></g>
+    <g id="i-call"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></g>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="in bar">
+    <a class="brand" href="#home">
+      <span class="brand-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-code"/></svg></span>
+      <span class="brand-name"><b>ኢትዮ ቴክ ዲጂታል</b><span>Ethio Tech Digital</span></span>
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#home" data-i18n="nav_home">መነሻ</a>
+      <a href="#portfolio" data-i18n="nav_portfolio">ፖርትፎሊዮ</a>
+      <a href="#order" data-i18n="nav_order">ትእዛዝ ማዘዣ</a>
+    </nav>
+    <div class="tools">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="am" aria-pressed="true">አማ</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="chip" id="adminBtn" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg><span id="adminLabel">Admin</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="in">
+      <h1 data-i18n="hero_title">ዘመናዊ የዌብሳይት እና የአፕሊኬሽን ልማት</h1>
+      <p class="sub" data-i18n="hero_sub">የንግድዎን እድገት በቴክኖሎጂ እንደግፋለን!</p>
+      <button type="button" class="poster" id="posterBtn" aria-label="Ethio Tech Digital poster"></button>
+      <span class="poster-hint" data-i18n="poster_hint">ለማሳደግ ይንኩ</span>
+      <div class="cta">
+        <a href="#order" class="btn btn-primary"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg><span data-i18n="cta_order">አሁኑኑ ይዘዙ</span></a>
+        <a href="#portfolio" class="btn btn-ghost"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-layers"/></svg><span data-i18n="cta_work">ስራዎችን ይመልከቱ</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="in features" aria-label="Services">
+    <div class="feature"><div class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-monitor"/></svg></div><h3 data-i18n="f1_t">ተለዋዋጭ ዲዛይን</h3><p data-i18n="f1_d">በስልክ፣ ታብሌት እና ኮምፒውተር ላይ በትክክል የሚሰራ።</p></div>
+    <div class="feature"><div class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg></div><h3 data-i18n="f2_t">iOS እና Android</h3><p data-i18n="f2_d">ለሁለቱም የሞባይል ሲስተሞች የሚሆኑ ዘመናዊ መተግበሪያዎች።</p></div>
+    <div class="feature"><div class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></div><h3 data-i18n="f3_t">ደህንነቱ የተጠበቀ</h3><p data-i18n="f3_d">ከፍተኛ ጥራት እና አስተማማኝ የደህንነት ስርዓት።</p></div>
+    <div class="feature"><div class="fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg></div><h3 data-i18n="f4_t">ፈጣን እና ቀልጣፋ</h3><p data-i18n="f4_d">በአጭር ጊዜ ውስጥ ተሰርቶ የሚረከብ አስተማማኝ አገልግሎት።</p></div>
+  </section>
+
+  <section class="in block" id="portfolio">
+    <h2 data-i18n="pf_title">የተሰሩ ፖርትፎሊዮዎች</h2>
+    <p class="lead" data-i18n="pf_sub">ከዚህ በፊት የሰራናቸውን ሳምፕል ስራዎች ይመልከቱ</p>
+
+    <div class="admin" id="adminPanel" hidden>
+      <h3><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"/></svg><span data-i18n="ad_title">አዲስ ፖርትፎሊዮ መጨመሪያ (Admin Only)</span></h3>
+      <p class="note" data-i18n="ad_note">ሴቭ ሲያደርጉ ለሁሉም ጎብኚዎች ወዲያውኑ ይታያል። ማስተካከል የሚችሉት አድሚኖች ብቻ ናቸው።</p>
+      <form id="portfolioForm" class="fgrid" autocomplete="off">
+        <div class="field"><label for="pTitleAm" data-i18n="ad_t_am">የፕሮጀክት ርዕስ (አማርኛ)</label><input class="ctl" id="pTitleAm" type="text" data-i18n-ph="ad_t_am_ph" placeholder="ምሳሌ፡ የትምህርት ቤት ዌብሳይት"></div>
+        <div class="field"><label for="pTitleEn" data-i18n="ad_t_en">Project title (English)</label><input class="ctl" id="pTitleEn" type="text" placeholder="e.g. School website"></div>
+        <div class="field"><label for="pType" data-i18n="ad_type">አይነት</label>
+          <select class="ctl" id="pType"><option value="Website">Website</option><option value="Mobile App">Mobile App</option><option value="E-Commerce">E-Commerce</option></select></div>
+        <div class="field full">
+          <span class="flabel" data-i18n="ad_photo">ፎቶ</span>
+          <div class="picker">
+            <img id="pPreview" class="ppreview" alt="" hidden>
+            <div class="pbtns">
+              <label class="btn btn-ghost btn-small" for="pFile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-image"/></svg><span data-i18n="ad_gallery">ከጋለሪ ምረጥ</span></label>
+              <input class="sr" id="pFile" type="file" accept="image/*">
+              <button type="button" class="btn btn-ghost btn-small" id="pClear" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trash"/></svg><span data-i18n="ad_clear">ፎቶውን አስወግድ</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="field full"><label for="pLink" data-i18n="ad_link">የዌብሳይት/አፕ ሊንክ (Live Link)</label><input class="ctl" id="pLink" type="url" placeholder="https://myproject.com"></div>
+        <div class="field"><label for="pDescAm" data-i18n="ad_d_am">አጭር ማብራሪያ (አማርኛ)</label><textarea class="ctl" id="pDescAm" rows="3"></textarea></div>
+        <div class="field"><label for="pDescEn" data-i18n="ad_d_en">Short description (English)</label><textarea class="ctl" id="pDescEn" rows="3"></textarea></div>
+        <div class="full pbtns"><button type="submit" class="btn btn-primary"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"/></svg><span id="pSubmitLabel" data-i18n="ad_save">ፕሮጀክቱን መዝግብ</span></button><button type="button" class="btn btn-ghost" id="pCancel" hidden><span data-i18n="cancel">ተው</span></button></div>
+      </form>
+    </div>
+
+    <div class="pgrid" id="portfolioGrid"></div>
+  </section>
+
+  <section class="in block" id="order">
+    <h2 data-i18n="or_title">ትእዛዝ መስጫ ገፅ</h2>
+    <p class="lead" data-i18n="or_sub">የሚፈልጉትን አገልግሎት መርጠው ይላኩልን</p>
+    <div class="order-wrap">
+      <div class="panel">
+        <form id="orderForm" novalidate>
+          <div class="field"><label for="custName" data-i18n="or_name">ሙሉ ስም</label><input class="ctl" id="custName" type="text" required autocomplete="name" data-i18n-ph="or_name_ph" placeholder="ስምዎን ያስገቡ"></div>
+          <div class="field"><label for="custPhone" data-i18n="or_phone">ስልክ ቁጥር</label><input class="ctl" id="custPhone" type="tel" required autocomplete="tel" inputmode="tel" pattern="[0-9+\s\-]{9,15}" placeholder="09..."></div>
+          <div class="field"><label for="custService" data-i18n="or_service">የሚፈልጉት አገልግሎት</label>
+            <select class="ctl" id="custService"><option value="web" data-i18n="svc_web">ዌብሳይት ልማት (Website Development)</option><option value="app" data-i18n="svc_app">የሞባይል አፕሊኬሽን (Mobile App)</option><option value="both" data-i18n="svc_both">ሁለቱንም (Website & App)</option></select></div>
+          <div class="field"><label for="custDetails" data-i18n="or_details">የትእዛዙ ዝርዝር መግለጫ</label><textarea class="ctl" id="custDetails" rows="4" data-i18n-ph="or_details_ph" placeholder="የሚፈልጉትን የዌብሳይት/አፕ አይነት ዝርዝር ያስገቡ..."></textarea></div>
+          <input class="hp" type="text" id="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="btn btn-primary btn-wide" id="sendBtn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg><span data-i18n="or_send">ትዕዛዝ ላክ</span></button>
+          <p class="or" data-i18n="or_or">ወይም በቀጥታ ይላኩ</p>
+          <div class="order-btns">
+            <a class="btn btn-tg" id="tgBtn" href="https://t.me/akiya1234" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg><span data-i18n="or_tg">በቴሌግራም እዘዝ</span></a>
+            <a class="btn btn-wa" id="waBtn" href="https://wa.me/251910036711" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="or_wa">በዋትሳፕ እዘዝ</span></a>
+          </div>
+          <div class="status" id="orderStatus" role="status" hidden>
+            <p id="statusText"></p>
+            <textarea id="statusMsg" readonly hidden aria-label="Order message"></textarea>
+          </div>
+        </form>
+      </div>
+      <aside class="panel contact">
+        <h3 data-i18n="ct_title">በቀጥታ ያግኙን</h3>
+        <div class="crow"><span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-call"/></svg></span><div><small data-i18n="ct_phone">ስልክ</small><strong>0910036711</strong></div><button type="button" class="chip" id="copyPhone"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg><span data-i18n="ct_copy">ቅዳ</span></button></div>
+        <div class="crow"><span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></span><div><small>Telegram</small><a href="https://t.me/akiya1234" target="_blank" rel="noopener"><strong>@akiya1234</strong></a></div></div>
+        <div class="crow"><span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chat"/></svg></span><div><small>WhatsApp</small><a href="https://wa.me/251910036711" target="_blank" rel="noopener"><strong>+251 910 036 711</strong></a></div></div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div class="float">
+  <a class="f-tg" href="https://t.me/akiya1234" target="_blank" rel="noopener" aria-label="Telegram"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></a>
+  <a class="f-wa" href="https://wa.me/251910036711" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chat"/></svg></a>
+</div>
+
+<footer>
+  <div class="in">
+    <p data-i18n="ft_rights">© 2026 ኢትዮ ቴክ ዲጂታል (Ethio Tech Digital). መብቱ በህግ የተጠበቀ ነው።</p>
+    <p><span data-i18n="ct_phone">ስልክ</span>: 0910036711 &nbsp;|&nbsp; Telegram: @akiya1234</p>
+  </div>
+</footer>
+
+<div class="overlay" id="loginModal" hidden>
+  <form class="modal" id="loginForm" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <h3 id="loginTitle"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg><span data-i18n="lg_title">የአስተዳዳሪ መግቢያ</span></h3>
+    <div class="field"><label for="adminPw" data-i18n="lg_pw">የይለፍ ቃል</label><input class="ctl" id="adminPw" type="password" autocomplete="current-password" required></div>
+    <p class="err" id="loginErr" role="alert" hidden data-i18n="lg_err">የተሳሳተ የይለፍ ቃል!</p>
+    <div class="row"><button type="button" class="btn btn-ghost btn-small" id="loginCancel" data-i18n="cancel">ተው</button><button type="submit" class="btn btn-primary btn-small" data-i18n="lg_go">ግባ</button></div>
+  </form>
+</div>
+
+<div class="overlay" id="lightbox" hidden>
+  <div class="modal light" role="dialog" aria-modal="true" aria-label="Poster">
+    <button type="button" class="x" id="lightClose" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <div class="poster" role="img" aria-label="Ethio Tech Digital poster"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+  var ADMIN_PW = '';
+  var MODE = (window.claude && typeof window.claude.use === 'function') ? 'artifact' : 'netlify';
+  var adminPw = '';
+  var TG = 'akiya1234', WA = '251910036711';
+  var STORE = 'etd_portfolios_v2', LANGKEY = 'etd_lang';
+
+  var T = {
+    am: {
+      nav_home: 'መነሻ', nav_portfolio: 'ፖርትፎሊዮ', nav_order: 'ትእዛዝ ማዘዣ', admin: 'Admin', logout: 'ውጣ',
+      hero_title: 'ዘመናዊ የዌብሳይት እና የአፕሊኬሽን ልማት', hero_sub: 'የንግድዎን እድገት በቴክኖሎጂ እንደግፋለን!',
+      poster_hint: 'ለማሳደግ ይንኩ', cta_order: 'አሁኑኑ ይዘዙ', cta_work: 'ስራዎችን ይመልከቱ',
+      f1_t: 'ተለዋዋጭ ዲዛይን', f1_d: 'በስልክ፣ ታብሌት እና ኮምፒውተር ላይ በትክክል የሚሰራ።',
+      f2_t: 'iOS እና Android', f2_d: 'ለሁለቱም የሞባይል ሲስተሞች የሚሆኑ ዘመናዊ መተግበሪያዎች።',
+      f3_t: 'ደህንነቱ የተጠበቀ', f3_d: 'ከፍተኛ ጥራት እና አስተማማኝ የደህንነት ስርዓት።',
+      f4_t: 'ፈጣን እና ቀልጣፋ', f4_d: 'በአጭር ጊዜ ውስጥ ተሰርቶ የሚረከብ አስተማማኝ አገልግሎት።',
+      pf_title: 'የተሰሩ ፖርትፎሊዮዎች', pf_sub: 'ከዚህ በፊት የሰራናቸውን ሳምፕል ስራዎች ይመልከቱ',
+      empty: 'እስካሁን ምንም ስራ አልተጨመረም።', open: 'ይክፈቱ', del: 'አጥፋ', sure: 'እርግጠኛ ነዎት?', yes: 'አዎ፣ አጥፋ', no: 'ተው',
+      ad_title: 'አዲስ ፖርትፎሊዮ መጨመሪያ (Admin Only)', ad_note: 'ሴቭ ሲያደርጉ ለሁሉም ጎብኚዎች ወዲያውኑ ይታያል። ማስተካከል የሚችሉት አድሚኖች ብቻ ናቸው።',
+      ad_t_am: 'የፕሮጀክት ርዕስ (አማርኛ)', ad_t_am_ph: 'ምሳሌ፡ የትምህርት ቤት ዌብሳይት', ad_t_en: 'Project title (English)',
+      ad_type: 'አይነት', ad_file: 'ፎቶ ይምረጡ (Image)', ad_media: 'ወይም የፎቶ ሊንክ (አማራጭ)', ad_link: 'የዌብሳይት/አፕ ሊንክ (Live Link)',
+      ad_d_am: 'አጭር ማብራሪያ (አማርኛ)', ad_d_en: 'Short description (English)', ad_save: 'ፕሮጀክቱን መዝግብ',
+      ad_need: 'ቢያንስ አንድ ርዕስ ያስገቡ።', ad_saved: 'ፖርትፎሊዮው በትክክል ተመዝግቧል!', ad_fail: 'ማስቀመጥ አልተቻለም (ማከማቻው ሞልቷል)።', ad_img_fail: 'ፎቶውን ማንበብ አልተቻለም።',
+      ad_in: 'በትክክል ገብተዋል! አሁን ፖርትፎሊዮ መጨመር ወይም ማጥፋት ይችላሉ።', ad_out: 'ከአስተዳዳሪ ወጥተዋል።',
+      sv_wait: 'በማስቀመጥ ላይ...', sv_shared: 'ተቀምጧል። ሁሉም ሰው አሁን ያየዋል።', sv_readonly: 'ማስተካከል የሚችሉት አድሚኖች ብቻ ናቸው። ለውጡ አልተቀመጠም።',
+      sv_local: 'በዚህ ብራውዘር ውስጥ ብቻ ተቀምጧል።', sv_err: 'ማስቀመጥ አልተቻለም። እንደገና ይሞክሩ።', sv_conflict: 'ሌላ ሰው በተመሳሳይ ጊዜ አስቀምጧል። ገጹ ይታደሳል፤ ለውጡን እንደገና ያድርጉ።',
+      ad_photo: 'ፎቶ', ad_gallery: 'ከጋለሪ ምረጥ', ad_clear: 'ፎቶውን አስወግድ', ad_update: 'ለውጡን ሴቭ አድርግ', edit: 'ኤዲት', lg_net: 'ሰርቨሩን ማግኘት አልተቻለም።',
+      or_send: 'ትዕዛዝ ላክ', or_or: 'ወይም በቀጥታ ይላኩ', or_sending: 'በመላክ ላይ...', or_sent: 'ትዕዛዝዎ ተልኳል! በቅርቡ እናገኝዎታለን።',
+      or_fail: 'ትዕዛዙን መላክ አልተቻለም። ከታች ባሉት ቁልፎች በቴሌግራም ወይም በዋትሳፕ ይላኩ።',
+      or_title: 'ትእዛዝ መስጫ ገፅ', or_sub: 'የሚፈልጉትን አገልግሎት መርጠው ይላኩልን',
+      or_name: 'ሙሉ ስም', or_name_ph: 'ስምዎን ያስገቡ', or_phone: 'ስልክ ቁጥር', or_service: 'የሚፈልጉት አገልግሎት',
+      svc_web: 'ዌብሳይት ልማት (Website Development)', svc_app: 'የሞባይል አፕሊኬሽን (Mobile App)', svc_both: 'ሁለቱንም (Website & App)',
+      or_details: 'የትእዛዙ ዝርዝር መግለጫ', or_details_ph: 'የሚፈልጉትን የዌብሳይት/አፕ አይነት ዝርዝር ያስገቡ...',
+      or_tg: 'በቴሌግራም እዘዝ', or_wa: 'በዋትሳፕ እዘዝ',
+      copied: 'መልዕክቱ ተቀድቷል። ቴሌግራም ሲከፈት በውይይቱ ላይ ይለጥፉት።', copy_fail: 'በራስ መቅዳት አልተቻለም። ከታች ያለውን መልዕክት ቀድተው በቴሌግራም ይላኩ።',
+      ct_title: 'በቀጥታ ያግኙን', ct_phone: 'ስልክ', ct_copy: 'ቅዳ', ct_done: 'ቁጥሩ ተቀድቷል።',
+      lg_title: 'የአስተዳዳሪ መግቢያ', lg_pw: 'የይለፍ ቃል', lg_err: 'የተሳሳተ የይለፍ ቃል!', lg_go: 'ግባ', cancel: 'ተው',
+      ft_rights: '© 2026 ኢትዮ ቴክ ዲጂታል (Ethio Tech Digital). መብቱ በህግ የተጠበቀ ነው።',
+      t_web: 'Website', t_app: 'Mobile App', t_shop: 'E-Commerce',
+      msg_head: '👋 ሰላም ኢትዮ ቴክ ዲጂታል!\n\nአዲስ የዌብሳይት/አፕ ትእዛዝ አለኝ፡', msg_name: '👤 ስም', msg_phone: '📞 ስልክ', msg_svc: '🛠 አገልግሎት', msg_det: '📝 ዝርዝር'
+    },
+    en: {
+      nav_home: 'Home', nav_portfolio: 'Portfolio', nav_order: 'Order', admin: 'Admin', logout: 'Log out',
+      hero_title: 'Modern Website & App Development', hero_sub: 'We power your business growth with technology!',
+      poster_hint: 'Tap to enlarge', cta_order: 'Order now', cta_work: 'See our work',
+      f1_t: 'Responsive design', f1_d: 'Works properly on phones, tablets and computers.',
+      f2_t: 'iOS & Android', f2_d: 'Modern apps built for both mobile platforms.',
+      f3_t: 'Secure', f3_d: 'High quality work with a reliable security setup.',
+      f4_t: 'Fast & efficient', f4_d: 'Dependable delivery in a short time.',
+      pf_title: 'Our portfolio', pf_sub: 'Browse sample projects we have built',
+      empty: 'No projects added yet.', open: 'Open', del: 'Delete', sure: 'Are you sure?', yes: 'Yes, delete', no: 'Cancel',
+      ad_title: 'Add a portfolio project (Admin only)', ad_note: 'Saved changes show up for every visitor right away. Only admins can make changes.',
+      ad_t_am: 'የፕሮጀክት ርዕስ (አማርኛ)', ad_t_am_ph: 'ምሳሌ፡ የትምህርት ቤት ዌብሳይት', ad_t_en: 'Project title (English)',
+      ad_type: 'Type', ad_file: 'Choose an image', ad_media: 'Or an image link (optional)', ad_link: 'Website / app link',
+      ad_d_am: 'አጭር ማብራሪያ (አማርኛ)', ad_d_en: 'Short description (English)', ad_save: 'Save project',
+      ad_need: 'Enter at least one title.', ad_saved: 'Project saved.', ad_fail: 'Could not save (storage is full).', ad_img_fail: 'Could not read that image.',
+      ad_in: 'Logged in. You can now add or delete projects.', ad_out: 'Logged out of admin.',
+      sv_wait: 'Saving...', sv_shared: 'Saved. Everyone sees it now.', sv_readonly: 'Only admins can make changes. Nothing was saved.',
+      sv_local: 'Saved in this browser only.', sv_err: 'Could not save. Please try again.', sv_conflict: 'Someone saved at the same time. The page will reload; please repeat your change.',
+      ad_photo: 'Photo', ad_gallery: 'Choose from gallery', ad_clear: 'Remove photo', ad_update: 'Save changes', edit: 'Edit', lg_net: 'Could not reach the server.',
+      or_send: 'Send order', or_or: 'Or message us directly', or_sending: 'Sending...', or_sent: 'Your order was sent! We will contact you soon.',
+      or_fail: 'Could not send the order. Please use Telegram or WhatsApp below.',
+      or_title: 'Place an order', or_sub: 'Choose a service and send it to us',
+      or_name: 'Full name', or_name_ph: 'Enter your name', or_phone: 'Phone number', or_service: 'Service you need',
+      svc_web: 'Website development', svc_app: 'Mobile application', svc_both: 'Both (website & app)',
+      or_details: 'Order details', or_details_ph: 'Describe the website or app you need...',
+      or_tg: 'Order on Telegram', or_wa: 'Order on WhatsApp',
+      copied: 'Your message was copied. Paste it into the chat when Telegram opens.', copy_fail: 'Automatic copy did not work. Copy the message below and send it on Telegram.',
+      ct_title: 'Contact us directly', ct_phone: 'Phone', ct_copy: 'Copy', ct_done: 'Number copied.',
+      lg_title: 'Admin login', lg_pw: 'Password', lg_err: 'Wrong password!', lg_go: 'Log in', cancel: 'Cancel',
+      ft_rights: '© 2026 Ethio Tech Digital (ኢትዮ ቴክ ዲጂታል). All rights reserved.',
+      t_web: 'Website', t_app: 'Mobile App', t_shop: 'E-Commerce',
+      msg_head: '👋 Hello Ethio Tech Digital!\n\nI would like to place a new website/app order:', msg_name: '👤 Name', msg_phone: '📞 Phone', msg_svc: '🛠 Service', msg_det: '📝 Details'
+    }
+  };
+
+  function svgUri(s) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); }
+  var COVER_WEB = svgUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9ecfb"/><stop offset="1" stop-color="#d4f3e9"/></linearGradient></defs><rect width="600" height="340" fill="url(#g)"/><rect x="90" y="46" width="420" height="250" rx="14" fill="#fff" stroke="#b9d3e8" stroke-width="2"/><path d="M90 60a14 14 0 0114-14h392a14 14 0 0114 14v22H90z" fill="#1c6fe0"/><circle cx="112" cy="64" r="5" fill="#fff"/><circle cx="130" cy="64" r="5" fill="#fff" opacity=".7"/><rect x="112" y="104" width="150" height="14" rx="7" fill="#0c2748"/><rect x="112" y="128" width="230" height="8" rx="4" fill="#9db4cc"/><rect x="112" y="146" width="200" height="8" rx="4" fill="#9db4cc"/><rect x="112" y="176" width="110" height="100" rx="10" fill="#d9ecfb"/><rect x="236" y="176" width="110" height="100" rx="10" fill="#d4f3e9"/><rect x="360" y="176" width="130" height="100" rx="10" fill="#e8f1fa"/></svg>');
+  var COVER_APP = svgUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4f3e9"/><stop offset="1" stop-color="#d9ecfb"/></linearGradient></defs><rect width="600" height="340" fill="url(#g)"/><rect x="235" y="24" width="130" height="292" rx="22" fill="#0c2748"/><rect x="243" y="40" width="114" height="260" rx="14" fill="#fff"/><rect x="253" y="54" width="94" height="40" rx="8" fill="#0b8a6a"/><rect x="253" y="106" width="94" height="52" rx="8" fill="#e8f1fa"/><rect x="253" y="168" width="94" height="52" rx="8" fill="#d9ecfb"/><rect x="253" y="230" width="94" height="52" rx="8" fill="#d4f3e9"/><circle cx="170" cy="120" r="28" fill="#1c6fe0" opacity=".25"/><circle cx="440" cy="220" r="36" fill="#0b8a6a" opacity=".25"/></svg>');
+
+  var INITIAL = [
+    { id: 1, title: { am: 'ኢ-ኮመርስ የገበያ ዌብሳይት', en: 'E-commerce shop website' }, type: 'E-Commerce', media: 'cover:web', link: 'https://t.me/' + TG,
+      desc: { am: 'ዕቃዎችን በኦንላይን ለመሸጥ እና ክፍያ ለመቀበል የሚያስችል ዘመናዊ ዌብሳይት።', en: 'A modern website for selling products online and accepting payments.' } },
+    { id: 2, title: { am: 'የምግብ ማዘዣ ሞባይል አፕ', en: 'Food ordering mobile app' }, type: 'Mobile App', media: 'cover:app', link: 'https://t.me/' + TG,
+      desc: { am: 'ለሬስቶራንቶች እና ለምግብ አቅርቦት ድርጅቶች የተሰራ ፈጣን የሞባይል አፕሊኬሽን።', en: 'A fast mobile app built for restaurants and food delivery businesses.' } }
+  ];
+
+  var lang = 'am', admin = false, confirmId = null, toastTimer = null;
+  try { var sl = localStorage.getItem(LANGKEY); if (sl === 'en' || sl === 'am') lang = sl; } catch (e) {}
+
+  function $(id) { return document.getElementById(id); }
+  function t(k) { return (T[lang] && T[lang][k]) || T.am[k] || k; }
+  function loc(o) { if (!o) return ''; if (typeof o === 'string') return o; return o[lang] || o.am || o.en || ''; }
+  function make(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function icon(id) {
+    var NS = 'http://www.w3.org/2000/svg', s = document.createElementNS(NS, 'svg'), u = document.createElementNS(NS, 'use');
+    s.setAttribute('class', 'ic'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true');
+    u.setAttribute('href', '#' + id); s.appendChild(u); return s;
+  }
+  function safeUrl(u) { try { var x = new URL(String(u || '').trim()); return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : ''; } catch (e) { return ''; } }
+  function safeMedia(u) { u = String(u || ''); if (/^data:image\/(jpeg|png|webp|gif|svg\+xml)/i.test(u)) return u; return safeUrl(u); }
+  function toast(msg) {
+    var el = $('toast'); el.textContent = msg; el.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+  }
+
+  /* Storage: everyone reads data/portfolio.json; the page owner saves it through the artifact capability.
+     Browser storage is only a fallback where that capability does not exist (for example a self-hosted copy). */
+  var DATA_PATH = 'data/portfolio.json';
+  var memory = INITIAL.slice();
+  function currentList() { return memory; }
+  function getLocal() {
+    try { var raw = localStorage.getItem(STORE); if (raw) { var arr = JSON.parse(raw); if (Array.isArray(arr)) return arr; } } catch (e) {}
+    return null;
+  }
+  function forShared(list) { return list.map(function (it) { var o = {}; Object.keys(it).forEach(function (k) { if (k !== 'mediaLocal') o[k] = it[k]; }); return o; }); }
+  function forLocal(list) { return list.map(function (it) { var o = {}; Object.keys(it).forEach(function (k) { if (k !== 'mediaLocal') o[k] = it[k]; }); if (it.mediaLocal) o.media = it.mediaLocal; return o; }); }
+  function setLocal(list) { try { localStorage.setItem(STORE, JSON.stringify(forLocal(list))); return true; } catch (e) { return false; } }
+  function useLocal() { var l = getLocal(); if (l) { memory = l; renderPortfolios(); } }
+  function loadShared() {
+    var url = MODE === 'artifact' ? DATA_PATH : '/api/portfolio';
+    try {
+      fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+        if (j && Array.isArray(j.items)) { memory = j.items; renderPortfolios(); }
+        else if (!(j && 'items' in j)) { useLocal(); }
+      }).catch(useLocal);
+    } catch (e) { useLocal(); }
+  }
+  function getArtifact() {
+    try { if (window.claude && window.claude.use) return window.claude.use('artifact'); } catch (e) {}
+    return Promise.resolve(null);
+  }
+  function mediaPath(id) { return MODE === 'artifact' ? 'img/' + id + '.jpg' : '/api/image/' + id; }
+  function persistNetlify(list, newImage) {
+    var body = { action: 'save', items: forShared(list), images: {} };
+    if (newImage) body.images[newImage.id] = newImage.uri.split(',')[1];
+    return fetch('/api/portfolio', { method: 'POST', headers: { 'content-type': 'application/json', 'x-admin-password': adminPw }, body: JSON.stringify(body) })
+      .then(function (r) { return r.ok ? 'shared' : (r.status === 401 ? 'readonly' : 'error'); }, function () { return 'error'; });
+  }
+  /* Resolves 'shared' | 'readonly' | 'conflict' | 'local' | 'error' */
+  function persist(list, newImage, removed) {
+    if (MODE === 'netlify') return persistNetlify(list, newImage);
+    var files = {};
+    if (newImage) files['img/' + newImage.id + '.jpg'] = { content: newImage.blob, contentType: 'image/jpeg' };
+    (removed || []).forEach(function (m) { if (/^img\/[A-Za-z0-9_.-]+$/.test(String(m))) files[m] = null; });
+    return getArtifact().then(function (art) {
+      if (!art) return setLocal(list) ? 'local' : 'error';
+      var payload = {};
+      payload[DATA_PATH] = { content: JSON.stringify({ items: forShared(list) }), contentType: 'application/json' };
+      Object.keys(files).forEach(function (k) { payload[k] = files[k]; });
+      return art.publish(payload).then(function () { return 'shared'; }, function (err) {
+        var c = err && err.code;
+        if (c === 'not_writer' || c === 'not_granted' || c === 'consent_required') return 'readonly';
+        if (c === 'conflict') return 'conflict';
+        if (c === 'capability_disabled' || c === 'capability_removed' || c === 'not_declared') return setLocal(list) ? 'local' : 'error';
+        return 'error';
+      });
+    }, function () { return setLocal(list) ? 'local' : 'error'; });
+  }
+  function reportSave(r) {
+    toast(r === 'shared' ? t('sv_shared') : r === 'local' ? t('sv_local') : r === 'readonly' ? t('sv_readonly') : r === 'conflict' ? t('sv_conflict') : t('sv_err'));
+  }
+  function mediaSrc(it) {
+    if (it.mediaLocal) return it.mediaLocal;
+    var m = String(it.media || '');
+    if (m === 'cover:web') return COVER_WEB;
+    if (m === 'cover:app') return COVER_APP;
+    if (/^(img\/[A-Za-z0-9_.-]+|\/api\/image\/[A-Za-z0-9_-]+)$/.test(m)) return m;
+    return safeMedia(m) || COVER_WEB;
+  }
+
+  /* Language */
+  function applyLang() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
+    $('adminLabel').textContent = admin ? t('logout') : t('admin');
+    $('adminBtn').setAttribute('aria-pressed', String(admin));
+    renderPortfolios();
+  }
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      lang = b.getAttribute('data-lang');
+      try { localStorage.setItem(LANGKEY, lang); } catch (e) {}
+      applyLang();
+    });
+  });
+
+  /* Portfolio */
+  function typeLabel(v) { return v === 'Mobile App' ? t('t_app') : v === 'E-Commerce' ? t('t_shop') : t('t_web'); }
+  function renderPortfolios() {
+    var grid = $('portfolioGrid'); grid.textContent = '';
+    var data = currentList();
+    if (!data.length) { grid.appendChild(make('p', 'empty', t('empty'))); return; }
+    data.forEach(function (it) {
+      var card = make('article', 'pcard');
+      var img = make('img', 'pmedia'); img.alt = loc(it.title); img.loading = 'lazy';
+      img.src = mediaSrc(it);
+      img.addEventListener('error', function () { img.onerror = null; img.src = COVER_WEB; });
+      var body = make('div', 'pbody');
+      body.appendChild(make('span', 'ptag', typeLabel(it.type)));
+      body.appendChild(make('h3', 'ptitle', loc(it.title)));
+      body.appendChild(make('p', 'pdesc', loc(it.desc)));
+      var act = make('div', 'pact');
+      var href = safeUrl(it.link);
+      if (href) {
+        var a = make('a', 'btn btn-primary btn-small'); a.href = href; a.target = '_blank'; a.rel = 'noopener';
+        a.appendChild(icon('i-link')); a.appendChild(make('span', null, t('open'))); act.appendChild(a);
+      }
+      if (admin) {
+        if (confirmId !== it.id) {
+          var ed = make('button', 'btn btn-ghost btn-small'); ed.type = 'button';
+          ed.appendChild(icon('i-edit')); ed.appendChild(make('span', null, t('edit')));
+          ed.addEventListener('click', function () { startEdit(it); });
+          act.appendChild(ed);
+        }
+        if (confirmId === it.id) {
+          act.appendChild(make('span', 'ptag', t('sure')));
+          var y = make('button', 'btn btn-danger btn-small', t('yes')); y.type = 'button';
+          y.addEventListener('click', function () { removeItem(it.id); });
+          var n = make('button', 'btn btn-ghost btn-small', t('no')); n.type = 'button';
+          n.addEventListener('click', function () { confirmId = null; renderPortfolios(); });
+          act.appendChild(y); act.appendChild(n);
+        } else {
+          var d = make('button', 'btn btn-danger btn-small'); d.type = 'button';
+          d.appendChild(icon('i-trash')); d.appendChild(make('span', null, t('del')));
+          d.addEventListener('click', function () { confirmId = it.id; renderPortfolios(); });
+          act.appendChild(d);
+        }
+      }
+      body.appendChild(act); card.appendChild(img); card.appendChild(body); grid.appendChild(card);
+    });
+  }
+  function removeItem(id) {
+    confirmId = null;
+    var old = currentList();
+    var next = old.filter(function (x) { return x.id !== id; });
+    var gone = old.filter(function (x) { return x.id === id; })[0];
+    toast(t('sv_wait'));
+    persist(next, null, gone ? [gone.media] : []).then(function (r) {
+      if (r === 'shared' || r === 'local') memory = next;
+      reportSave(r); renderPortfolios();
+    });
+  }
+  function fileToDataUri(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onerror = reject;
+      fr.onload = function () {
+        var img = new Image();
+        img.onerror = reject;
+        img.onload = function () {
+          var k = Math.min(1, 900 / img.width), c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k));
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          var uri = c.toDataURL('image/jpeg', 0.8);
+          c.toBlob(function (b) { if (b) resolve({ uri: uri, blob: b }); else reject(new Error('blob')); }, 'image/jpeg', 0.8);
+        };
+        img.src = fr.result;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+  var editingId = null, pickedImage = null, formMedia = 'cover:web';
+  function isCover(m) { return m === 'cover:web' || m === 'cover:app'; }
+  function refreshPreview() {
+    var p = $('pPreview'), src = '';
+    if (pickedImage) src = pickedImage.uri;
+    else if (editingId !== null || !isCover(formMedia)) src = mediaSrc({ media: formMedia });
+    if (src) { p.src = src; p.hidden = false; } else { p.removeAttribute('src'); p.hidden = true; }
+    $('pClear').hidden = !(pickedImage || !isCover(formMedia));
+  }
+  function setSubmitLabel(key) { var el = $('pSubmitLabel'); el.setAttribute('data-i18n', key); el.textContent = t(key); }
+  function resetForm() {
+    $('portfolioForm').reset(); editingId = null; pickedImage = null; formMedia = 'cover:web';
+    setSubmitLabel('ad_save'); $('pCancel').hidden = true; refreshPreview();
+  }
+  function startEdit(it) {
+    editingId = it.id; pickedImage = null; formMedia = it.media || 'cover:web';
+    $('pTitleAm').value = (it.title && it.title.am) || ''; $('pTitleEn').value = (it.title && it.title.en) || '';
+    $('pType').value = it.type || 'Website'; $('pLink').value = it.link || '';
+    $('pDescAm').value = (it.desc && it.desc.am) || ''; $('pDescEn').value = (it.desc && it.desc.en) || '';
+    $('pFile').value = '';
+    setSubmitLabel('ad_update'); $('pCancel').hidden = false; refreshPreview();
+    $('adminPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('pFile').addEventListener('change', function () {
+    var f = this.files && this.files[0], input = this;
+    if (!f) return;
+    fileToDataUri(f).then(function (img) { pickedImage = img; refreshPreview(); input.value = ''; }, function () { toast(t('ad_img_fail')); });
+  });
+  $('pClear').addEventListener('click', function () { pickedImage = null; formMedia = 'cover:web'; refreshPreview(); });
+  $('pCancel').addEventListener('click', resetForm);
+  $('portfolioForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var titleAm = $('pTitleAm').value.trim(), titleEn = $('pTitleEn').value.trim();
+    if (!titleAm && !titleEn) { toast(t('ad_need')); return; }
+    var list = currentList();
+    var existing = editingId !== null ? list.filter(function (x) { return x.id === editingId; })[0] : null;
+    var media = formMedia, newImage = null, removed = [];
+    if (pickedImage) {
+      var imgId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      media = mediaPath(imgId);
+      newImage = { id: imgId, blob: pickedImage.blob, uri: pickedImage.uri };
+    }
+    if (existing && existing.media !== media) removed.push(existing.media);
+    var item = {
+      id: existing ? existing.id : Date.now(), type: $('pType').value, media: media, link: safeUrl($('pLink').value),
+      title: { am: titleAm, en: titleEn }, desc: { am: $('pDescAm').value.trim(), en: $('pDescEn').value.trim() }
+    };
+    if (pickedImage) item.mediaLocal = pickedImage.uri;
+    else if (existing && existing.mediaLocal && existing.media === media) item.mediaLocal = existing.mediaLocal;
+    var next = existing ? list.map(function (x) { return x.id === existing.id ? item : x; }) : [item].concat(list);
+    toast(t('sv_wait'));
+    persist(next, newImage, removed).then(function (r) {
+      if (r === 'shared' || r === 'local') { memory = next; resetForm(); }
+      reportSave(r); renderPortfolios();
+    });
+  });
+
+  /* Admin login */
+  function openOverlay(id) { $(id).hidden = false; }
+  function closeOverlay(id) { $(id).hidden = true; }
+  function setAdmin(on) {
+    admin = on; confirmId = null;
+    if (!on) { adminPw = ''; resetForm(); }
+    $('adminPanel').hidden = !on;
+    applyLang();
+  }
+  $('adminBtn').addEventListener('click', function () {
+    if (admin) { setAdmin(false); toast(t('ad_out')); return; }
+    $('loginErr').hidden = true; $('adminPw').value = ''; openOverlay('loginModal');
+    setTimeout(function () { $('adminPw').focus(); }, 30);
+  });
+  $('loginCancel').addEventListener('click', function () { closeOverlay('loginModal'); });
+  function loginSuccess() {
+    closeOverlay('loginModal'); $('adminPw').value = ''; setAdmin(true); toast(t('ad_in'));
+    $('portfolio').scrollIntoView({ block: 'start' });
+  }
+  function loginFail(key) { $('loginErr').textContent = t(key); $('loginErr').hidden = false; $('adminPw').select(); }
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var pw = $('adminPw').value;
+    $('loginErr').hidden = true;
+    if (MODE === 'artifact') { if (pw === ADMIN_PW) loginSuccess(); else loginFail('lg_err'); return; }
+    fetch('/api/portfolio', { method: 'POST', headers: { 'content-type': 'application/json', 'x-admin-password': pw }, body: JSON.stringify({ action: 'login' }) })
+      .then(function (r) { if (r.ok) { adminPw = pw; loginSuccess(); } else { loginFail('lg_err'); } }, function () { loginFail('lg_net'); });
+  });
+
+  /* Poster lightbox */
+  $('posterBtn').addEventListener('click', function () { openOverlay('lightbox'); $('lightClose').focus(); });
+  $('lightClose').addEventListener('click', function () { closeOverlay('lightbox'); });
+  ['lightbox', 'loginModal'].forEach(function (id) {
+    $(id).addEventListener('click', function (e) { if (e.target === $(id)) closeOverlay(id); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeOverlay('lightbox'); closeOverlay('loginModal'); }
+  });
+
+  /* Orders */
+  function serviceLabel() { return t('svc_' + $('custService').value); }
+  function buildMessage() {
+    return t('msg_head') + '\n' + t('msg_name') + ': ' + $('custName').value.trim() + '\n' + t('msg_phone') + ': ' + $('custPhone').value.trim() +
+      '\n' + t('msg_svc') + ': ' + serviceLabel() + '\n' + t('msg_det') + ': ' + $('custDetails').value.trim();
+  }
+  function copyText(s) {
+    try { return navigator.clipboard.writeText(s).then(function () { return true; }, function () { return false; }); }
+    catch (e) { return Promise.resolve(false); }
+  }
+  function orderFailed() {
+    var box = $('statusMsg');
+    $('statusText').textContent = t('or_fail'); box.value = buildMessage(); box.hidden = false; $('orderStatus').hidden = false;
+  }
+  $('orderForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = $('orderForm');
+    if (!form.reportValidity()) return;
+    if ($('hp').value) return;
+    var btn = $('sendBtn'), label = btn.querySelector('span');
+    btn.disabled = true; label.textContent = t('or_sending');
+    var payload = { name: $('custName').value.trim(), phone: $('custPhone').value.trim(), service: $('custService').value, details: $('custDetails').value.trim(), lang: lang, website: $('hp').value };
+    function done() { btn.disabled = false; label.textContent = t('or_send'); }
+    fetch('/api/order', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) {
+        done();
+        if (r.ok) { $('statusText').textContent = t('or_sent'); $('statusMsg').hidden = true; $('orderStatus').hidden = false; form.reset(); }
+        else { orderFailed(); }
+      }, function () { done(); orderFailed(); });
+  });
+  $('tgBtn').addEventListener('click', function (e) {
+    var form = $('orderForm');
+    if (!form.reportValidity()) { e.preventDefault(); return; }
+    var msg = buildMessage();
+    copyText(msg).then(function (ok) {
+      var st = $('orderStatus'), box = $('statusMsg');
+      $('statusText').textContent = ok ? t('copied') : t('copy_fail');
+      box.value = msg; box.hidden = ok; st.hidden = false;
+      if (!ok) { box.focus(); box.select(); }
+    });
+  });
+  $('waBtn').addEventListener('click', function (e) {
+    var form = $('orderForm');
+    if (!form.reportValidity()) { e.preventDefault(); return; }
+    $('waBtn').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(buildMessage());
+  });
+  $('copyPhone').addEventListener('click', function () {
+    copyText('0910036711').then(function (ok) { toast(ok ? t('ct_done') : '0910036711'); });
+  });
+
+  applyLang();
+  loadShared();
+})();
+</script>
+
+</body>
+</html>
